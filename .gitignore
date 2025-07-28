@@ -1,0 +1,5 @@
+# Ignore sensitive files
+credentials.json
+token.json
+extracted_jobs.csv
+__pycache__/
