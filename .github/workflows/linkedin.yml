@@ -22,13 +22,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Create credentials.json from secret
       - name: Create credentials.json
-        run: echo '${{ secrets.CREDENTIALS_JSON }}' > credentials.json
+  run: |
+    printf "%s" "${{ secrets.CREDENTIALS_JSON }}" > credentials.json
 
-      # Create token.json from secret
-      - name: Create token.json
-        run: echo '${{ secrets.TOKEN_JSON }}' > token.json
+- name: Create token.json
+  run: |
+    printf "%s" "${{ secrets.TOKEN_JSON }}" > token.json
+
 
       - name: Run LinkedIn Job Automation
         run: python linkedin_to_apex.py
