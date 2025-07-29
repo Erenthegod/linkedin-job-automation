@@ -3,14 +3,15 @@ name: Daily LinkedIn Job Automation
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 14 * * *' # every day at 2 PM UTC
+    - cron: '0 14 * * *'  # every day at 2 PM UTC
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -23,13 +24,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: Create credentials.json
-  run: |
-    printf "%s" "${{ secrets.CREDENTIALS_JSON }}" > credentials.json
+        run: |
+          echo '${{ secrets.CREDENTIALS_JSON }}' > credentials.json
 
-- name: Create token.json
-  run: |
-    printf "%s" "${{ secrets.TOKEN_JSON }}" > token.json
-
+      - name: Create token.json
+        run: |
+          echo '${{ secrets.TOKEN_JSON }}' > token.json
 
       - name: Run LinkedIn Job Automation
         run: python linkedin_to_apex.py
